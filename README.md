@@ -1,15 +1,18 @@
 # Reflex Screen Widget
 
-A [Reflex](https://github.com/ryantrinkle/reflex) widget that displays a dynamic Haskell image on the screen using `Canvas` and `onRequestAnimationFrame`.
+A Reflex widget that displays a dynamic Haskell image on the screen using `Canvas` and `onRequestAnimationFrame`.
+
+## Example
 
 ![Example gif](https://github.com/MaiaVictor/ReflexScreenWidget/blob/gh-pages/example.gif)
 
----
+- [Code](https://github.com/maiavictor/ReflexScreenWidget/src/Main.hs).
+- [Live](http://maiavictor.github.io/ReflexScreenWidget/).
 
 ## Usage
 
 This code creates a constant 128x128 blue image signal and renders it to a
-canvas using `screenWidget`.
+canvas using `screenWidget`, which is the first image on the example.
 
 ```haskell
 import Reflex.Dom (mainWidget, constant, MonadWidget)
@@ -26,5 +29,3 @@ blueScreen = do
     screenCanvas <- screenWidget (constant image)
     return ()
 ```
-
-You can see the code for this and the other 2 examples above [on this file](https://github.com/maiavictor/ReflexScreenWidget/src/Main.hs). The resulting HTML/JS is [available live here](http://maiavictor.github.io/ReflexScreenWidget/).
