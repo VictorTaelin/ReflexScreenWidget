@@ -1,6 +1,6 @@
 # Reflex Screen Widget
 
-A Reflex widget that displays a dynamic Haskell image on the screen using `Canvas` and `onRequestAnimationFrame`.
+A [Reflex](https://github.com/ryantrinkle/reflex) widget that displays a dynamic Haskell image on the screen using `Canvas` and `onRequestAnimationFrame`.
 
 ![Example gif](https://github.com/MaiaVictor/ReflexScreenWidget/blob/gh-pages/example.gif)
 
