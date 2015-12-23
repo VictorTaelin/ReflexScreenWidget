@@ -1,39 +1,18 @@
-{-# LANGUAGE ScopedTypeVariables, NoMonomorphismRestriction, JavaScriptFFI, CPP #-}
+{-# LANGUAGE ScopedTypeVariables, NoMonomorphismRestriction #-}
 
 module Reflex.Dom.Widget.Screen where
 
 import Control.Applicative ((<$>))
 import Control.Monad.IO.Class (liftIO)
 import Data.Word (Word32)
-import Foreign.Ptr (Ptr)
+import GHCJS.Canvas.BlitByteString (blitByteString)
 import GHCJS.DOM.Types (unElement, toElement)
 import GHCJS.Marshal.Pure (pToJSVal)
-import GHCJS.Types (JSVal)
 import Reflex.Dom
 import Reflex.Dom.AnimationFrame (animationFrame)
 import qualified Data.ByteString as B (ByteString)
 import qualified Data.ByteString.Unsafe as B (unsafeUseAsCString)
 import qualified Data.Map as M (Map, empty)
-
-#ifdef __GHCJS__
-foreign import javascript unsafe 
-    -- Arguments
-    --    canvas : JSHtmlElementCanvas
-    --    width  : JSNumber
-    --    height : JSNumber
-    --    pixels : Ptr a -- Pointer to a ByteString in the format below
-    "(function(){                                                     \
-        var cvs    = $1;                                              \
-        var width  = $2;                                              \
-        var height = $3;                                              \
-        var pixels = new Uint8ClampedArray($4.u8);                    \
-        cvs.width  = width;                                           \
-        cvs.height = height;                                          \
-        var ctx    = cvs.getContext('2d');                            \
-        ctx.putImageData(new ImageData(pixels, width, height), 0, 0); \
-    })()" 
-    blit :: forall a . JSVal -> JSVal -> JSVal -> Ptr a -> IO ()
-#endif
 
 -- | The image format used to render to the canvas. Each byte of the buffer
 -- represents a color channel from 0~255, in the following format:
@@ -61,7 +40,7 @@ screenWidgetAttr attrs imageBehavior = do
     let draw :: ByteImageRgba -> IO ()
         draw (ByteImageRgba width height pixelByteString) = do
             B.unsafeUseAsCString pixelByteString $ \ ptr -> do
-                blit canvasJS (pToJSVal width) (pToJSVal height) ptr
+                blitByteString canvasJS (pToJSVal width) (pToJSVal height) ptr
 
     -- Redraws the canvas whenever the window is ready to render a frame.
     animator <- animationFrame
