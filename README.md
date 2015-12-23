@@ -6,8 +6,8 @@ A Reflex widget that displays a dynamic Haskell image on the screen using `Canva
 
 ![Example gif](https://github.com/MaiaVictor/ReflexScreenWidget/blob/gh-pages/example.gif)
 
-- [Code](https://github.com/maiavictor/ReflexScreenWidget/src/Main.hs).
-- [Live](http://maiavictor.github.io/ReflexScreenWidget/).
+- [Code](https://github.com/MaiaVictor/ReflexScreenWidget/blob/gh-pages/src/Main.hs)
+- [Live](http://maiavictor.github.io/ReflexScreenWidget/)
 
 ## Usage
 
