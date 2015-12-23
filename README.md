@@ -11,8 +11,7 @@ A Reflex widget that displays a dynamic Haskell image on the screen using `Canva
 
 ## Usage
 
-This code creates a constant 128x128 blue image signal and renders it to a
-canvas using `screenWidget`, which is the first image on the example.
+This code creates a constant 128x128 blue image signal, resulting on the first canvas on the example gif.
 
 ```haskell
 import Reflex.Dom (mainWidget, constant, MonadWidget)
