@@ -1,6 +1,6 @@
 # Reflex Screen Widget
 
-A Reflex widget that displays a dynamic Haskell image on the screen using `Canvas` and `onRequestAnimationFrame`.
+A Reflex widget that displays a dynamic Haskell image on the screen using `Canvas` and `onRequestAnimationFrame`. It receives the pixel data as a `ByteString`, and passes the pointer directly to JavaScript, requiring no intermediate copy.
 
 ## Example
 
