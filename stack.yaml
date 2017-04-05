@@ -1,24 +1,44 @@
-flags: {}
+# stack yaml starter file for reflex projects with ghc
 
-resolver: nightly-2015-12-05
-
-compiler: ghcjs-0.2.0.20151029_ghc-7.10.2
+resolver: lts-6.25
+compiler: ghcjs-0.2.0.9006025_ghc-7.10.3
 compiler-check: match-exact
-setup-info:
-  ghcjs:
-    source:
-      ghcjs-0.2.0.20151029_ghc-7.10.2:
-        url: "https://github.com/nrolland/ghcjs/releases/download/v0.2.0.20151029/ghcjs-0.2.0.20151029.tar.gz"
 
+setup-info:
+ ghcjs:
+   source:
+     ghcjs-0.2.0.9006025_ghc-7.10.3:
+       url: http://ghcjs.tolysz.org/lts-6.25-9006025.tar.gz
+       sha1: 3c87228579b55c05e227a7876682c2a7d4c9c007
+
+flags: {}
+extra-package-dbs: []
 packages:
-- location: '.'
+- '.'
 - location:
-    git: https://github.com/ryantrinkle/reflex-dom.git
-    commit: f4dbdd799260bc203f7f5cdce18362cb896f6d57 # ghcjs-improved-base-2 branch
+    git:  https://github.com/ghcjs/ghcjs.git
+    commit: 8c30beb939dadcb949b922856735080699d1d986
+  subdirs:
+  - lib/ghcjs-prim
+  extra-dep: true
+- location:
+    git: https://github.com/ghcjs/ghcjs-base.git
+    commit: dd7034ef8582ea8a175a71a988393a9d1ee86d6f
   extra-dep: true
 
+- location:
+    git: https://github.com/reflex-frp/reflex
+    commit: 91299fce0bb2caddfba35af6608df57dd31e3690
+  extra-dep: true
+
+- location:
+    git: https://github.com/reflex-frp/reflex-dom
+    commit: 66b6d35773fcb337ab38ebce02c4b23baeae721e
+  extra-dep: true
+
+
 extra-deps:
-  - reflex-0.3.2
-  - ref-tf-0.4
-  - these-0.6.1.0
-  - ghcjs-dom-0.2.3.0
+- these-0.6.2.1
+- prim-uniq-0.1.0.1
+- ref-tf-0.4.0.1
+- zenc-0.1.1

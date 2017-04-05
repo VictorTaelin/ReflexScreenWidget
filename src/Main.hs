@@ -20,10 +20,11 @@ blueScreen = do
     let blue   = [0, 0, 255, 255] -- [Red, Green, Blue, Alpha]
     let buffer = BS.pack $ concat $ replicate (width*height) blue
     let image  = ByteImageRgba width height buffer
-    screenCanvas <- screenWidget (constant image)
+    _ <- screenWidget $ constant image
     return ()
 
 -- Starts an widget with 3 screens.
+main :: IO ()
 main = do
     startTime <- getCurrentTime
     mainWidget $ do

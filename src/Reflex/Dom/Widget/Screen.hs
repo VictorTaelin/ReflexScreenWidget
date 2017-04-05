@@ -1,10 +1,9 @@
 {-# LANGUAGE ScopedTypeVariables, NoMonomorphismRestriction #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Reflex.Dom.Widget.Screen where
 
-import Control.Applicative ((<$>))
 import Control.Monad.IO.Class (liftIO)
-import Data.Word (Word32)
 import GHCJS.Canvas.BlitByteString (blitByteString)
 import GHCJS.DOM.Types (unElement, toElement)
 import GHCJS.Marshal.Pure (pToJSVal)
@@ -13,6 +12,7 @@ import Reflex.Dom.AnimationFrame (animationFrame)
 import qualified Data.ByteString as B (ByteString)
 import qualified Data.ByteString.Unsafe as B (unsafeUseAsCString)
 import qualified Data.Map as M (Map, empty)
+import qualified Data.Text as T
 
 -- | The image format used to render to the canvas. Each byte of the buffer
 -- represents a color channel from 0~255, in the following format:
@@ -27,19 +27,19 @@ data ByteImageRgba = ByteImageRgba {
 
 -- | Renders a dynamic ByteImageData using a Canvas. The canvas is refreshed
 --   at every animation frame of the browser. Returns the canvas.
-screenWidgetAttr :: forall t m . MonadWidget t m => M.Map String String -> Behavior t ByteImageRgba -> m (El t)
+screenWidgetAttr :: forall t m . MonadWidget t m => M.Map T.Text T.Text -> Behavior t ByteImageRgba -> m (El t)
 screenWidgetAttr attrs imageBehavior = do
 
     -- Creates the canvas element on which we will render
-    (canvasEl,event) <- elAttr' "canvas" attrs (text "")
+    (canvasEl, _) <- elAttr' "canvas" attrs (text "")
 
     -- Gets the proper GHCJS's JSVal of the canvas
-    let canvasJS = unElement.toElement._el_element $ canvasEl
+    let canvasJS = unElement.toElement._element_raw $ canvasEl
 
     -- IO action that will draw our pixels to the canvas 
     let draw :: ByteImageRgba -> IO ()
-        draw (ByteImageRgba width height pixelByteString) = do
-            B.unsafeUseAsCString pixelByteString $ \ ptr -> do
+        draw (ByteImageRgba width height pixelByteString) =
+            B.unsafeUseAsCString pixelByteString $ \ ptr ->
                 blitByteString canvasJS (pToJSVal width) (pToJSVal height) ptr
 
     -- Redraws the canvas whenever the window is ready to render a frame.

@@ -5,7 +5,7 @@ module Reflex.Dom.Widget.Screen.Test where
 import Control.Monad (void)
 import Data.Time.Clock (UTCTime)
 import Data.Word (Word8)
-import Reflex.Dom (MonadWidget, Event, performEventAsync, getPostBuild, TickInfo, tickLossy, hold, mainWidget, _tickInfo_n)
+import Reflex.Dom (MonadWidget, tickLossy, hold, _tickInfo_n)
 import Reflex.Dom.Widget.Screen (screenWidget, ByteImageRgba, ByteImageRgba(ByteImageRgba))
 import qualified Data.ByteString as B
 
@@ -25,7 +25,7 @@ screenWidgetTestApp startTime renderWaves width height = void $ do
                         0 -> floor $ 255*(0.5+sin (fi dx/(7 + cos t * 3)+t*5)/2)
                         1 -> floor $ 255*(0.5+sin (fi dy/5+sin t * 7)/2)
                         2 -> floor $ 255*(0.75+sin (dist/2+(9+cos t * 3))/4)
-                        otherwise -> 255
+                        _ -> 255
             fi   = fromIntegral
             cx   = div width 2  :: Int
             cy   = div height 2 :: Int
