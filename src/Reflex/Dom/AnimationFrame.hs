@@ -10,7 +10,7 @@ import Reflex.Dom (MonadWidget, Event, performEventAsync, getPostBuild)
 --   starting after a specified event.
 animationFrameFrom :: MonadWidget t m => Event t a -> m (Event t Double)
 animationFrameFrom = performEventAsync . fmap (const (void . liftIO . loop 0)) where 
-    loop d cb = inAnimationFrame ContinueAsync (\ d -> loop d cb) >> cb d
+    loop d cb = inAnimationFrame ContinueAsync (`loop` cb) >> cb d
 
 -- | Event that is fired continuously using onRequestAnimationFrame,
 --   starting after all widgets are built.
